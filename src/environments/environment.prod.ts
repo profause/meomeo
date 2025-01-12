@@ -1,12 +1,12 @@
 export const environment = {
   production: true,
   firebaseConfig: {
-    apiKey: "AIzaSyCoqgjEChROHkT_Nfd9iS8g8o7sKOn3cU8",
-    authDomain: "washingbay-manager.firebaseapp.com",
-    projectId: "washingbay-manager",
-    storageBucket: "washingbay-manager.appspot.com",
-    messagingSenderId: "511413255026",
-    appId: "1:511413255026:web:e6398d17defd43c07b3beb"
+    apiKey: 'AIzaSyD4fdNPYqa60pf2KzyHEb_v2xlcw69ba90',
+    authDomain: 'meomeo-2025.firebaseapp.com',
+    projectId: 'meomeo-2025',
+    storageBucket: 'meomeo-2025.firebasestorage.app',
+    messagingSenderId: '841313071278',
+    appId: '1:841313071278:web:35788fc330176495ed7d3f',
   },
   paystack: {
     token: 'pk_test_0496df6a2340205597335ad313683b9b3f29e8d1',
