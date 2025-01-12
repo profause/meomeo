@@ -5,6 +5,9 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { FIREBASE_OPTIONS } from '@angular/fire/compat';
 import { environment } from 'src/environments/environment';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { SharedModule } from './shared/shared.module';
+import { AppMaterialDesignModule } from './app-material-design.module';
 
 
 @NgModule({
@@ -13,7 +16,10 @@ import { environment } from 'src/environments/environment';
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    BrowserAnimationsModule,
+    AppMaterialDesignModule,
+    SharedModule
   ],
   providers: [{provide: FIREBASE_OPTIONS, useValue: environment.firebaseConfig}],
   bootstrap: [AppComponent]

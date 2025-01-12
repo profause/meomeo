@@ -1,0 +1,22 @@
+<h4 mat-dialog-title>{{dialogOptions.title}}</h4>
+<div mat-dialog-content>
+    <div class="" style="min-width: 340px;">
+        <p class="subtitle-text" id="example-radio-group-label">Select a dispatch rider</p>
+        <mat-radio-group aria-labelledby="example-radio-group-label" class="example-radio-group" [(ngModel)]="selectedAccount">
+            <mat-radio-button class="example-radio-button p-2" *ngFor="let account of accounts" [value]="account">
+                <div class="p-1 subtitle-text">
+                    {{account.name}}
+                </div>
+            </mat-radio-button>
+        </mat-radio-group>
+        <!-- <div>Your favorite season is: {{selectedAccount | json}}</div> -->
+    </div>
+    <div class="col-md-12 d-flex justify-content-center mt-3 mb-3">
+        <mat-spinner [hidden]="!isLoading" class="align-self-center" mode="indeterminate" [diameter]="35" [strokeWidth]="2">
+        </mat-spinner>
+    </div>
+</div>
+<div mat-dialog-actions>
+    <button mat-button (click)="cancel()">Cancel</button>
+    <button type="submit" mat-button (click)="confirm();" [disabled]="selectedAccount==null">Confirm</button>
+</div>

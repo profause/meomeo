@@ -1,0 +1,98 @@
+<!-- <h3 mat-dialog-title class="modal-title title-text">{{dialogOptions.title}}</h3> -->
+<div mat-dialog-content>
+    <!-- <p class="subtitle-text">{{dialogOptions.message}}</p> -->
+    <mat-tab-group mat-align-tabs="start" mat-align-tabs="center" class="remove-border-bottom">
+        <mat-tab label="Order Details" style="font-family: avenir-roman;">
+            <div *ngIf="orderItem.food_name" class="pl-3 pr-3 mt-3">
+                <!-- <h5 class="title-text subtitle-text-color">Order Details</h5> -->
+                <p class="mt-2 mb-0 sub-text">{{orderItem?.food_name}}</p>
+                <!-- <ngx-skeleton-loader></ngx-skeleton-loader> -->
+
+                <div class="mt-2 mb-1">
+                    <p class="p-0 m-0 subtitle-text subtitle-text-color">Description</p>
+                    <p class="sub-text">{{orderItem?.description}}</p>
+                </div>
+                <div class="mt-2 mb-1 d-flex justify-content-between">
+                    <p class="p-0 m-0 subtitle-text subtitle-text-color">Date</p>
+                    <p class="sub-text">{{orderItem?.created_date.seconds* 1000 | date}}</p>
+                </div>
+                <div class="mt-2 mb-1 d-flex justify-content-between">
+                    <p class="p-0 m-0 subtitle-text subtitle-text-color">Order Number</p>
+                    <p class="sub-text">{{orderItem?.id}}</p>
+                </div>
+                <div class="mt-2 mb-1 d-flex justify-content-between">
+                    <p class="p-0 m-0 subtitle-text subtitle-text-color">Order Quantity</p>
+                    <p class="sub-text">{{orderItem?.quantity}}</p>
+                </div>
+
+                <div class="mt-2 mb-1 d-flex justify-content-between">
+                    <p class="p-0 m-0 subtitle-text subtitle-text-color">Order Status</p>
+                    <p class="sub-text">{{orderItem?.status}}</p>
+                </div>
+                <!-- <mat-divider></mat-divider> -->
+                <div class="p-3" style="background-color: #F4F4F4; border-radius: 5px;">
+                    <h5 class="title-text subtitle-text-color">Payment Details & Receipt</h5>
+                    <div class="mt-2 mb-1 d-flex justify-content-between">
+                        <p class="p-0 m-0 subtitle-text subtitle-text-color">Total Amount</p>
+                        <p class="sub-text">{{paymentInfo?.amount}}</p>
+                    </div>
+                    <div class="mt-2 mb-1 d-flex justify-content-between">
+                        <p class="p-0 m-0 subtitle-text subtitle-text-color">Reference</p>
+                        <p class="sub-text">{{paymentInfo?.reference}}</p>
+                    </div>
+                    <div class="mt-2 mb-1 d-flex justify-content-between">
+                        <p class="p-0 m-0 subtitle-text subtitle-text-color">Transaction Fee</p>
+                        <p class="sub-text">{{paymentInfo?.transaction_fees}}</p>
+                    </div>
+                    <div class="mt-2 mb-1 d-flex justify-content-between">
+                        <p class="p-0 m-0 subtitle-text subtitle-text-color">Payment Method</p>
+                        <p class="sub-text">{{paymentInfo?.method}}</p>
+                    </div>
+                    <div class="mt-2 mb-1 d-flex justify-content-between">
+                        <p class="p-0 m-0 subtitle-text subtitle-text-color">Status</p>
+                        <p class="sub-text">{{paymentInfo?.status}}</p>
+                    </div>
+                </div>
+            </div>
+        </mat-tab>
+        <mat-tab label="Order Receipt" style="font-family: avenir-roman;">
+            <div id="print-section" class="p-3" style="background-color: #F4F4F4; border-radius: 5px;">
+                <h5 class="title-text subtitle-text-color">Payment Details & Receipt</h5>
+                <qrcode [qrdata]="'https://api-233bite.herokuapp.com/v1/payments/paystack-webhook'" [width]="128" [errorCorrectionLevel]="'M'" [elementType]="'svg'"></qrcode>
+                <div class="mt-2 mb-1 d-flex justify-content-between">
+                    <p class="p-0 m-0 subtitle-text subtitle-text-color">Total Amount</p>
+                    <p class="sub-text">{{paymentInfo?.amount}}</p>
+                </div>
+                <div class="mt-2 mb-1 d-flex justify-content-between">
+                    <p class="p-0 m-0 subtitle-text subtitle-text-color">Reference</p>
+                    <p class="sub-text">{{paymentInfo?.reference}}</p>
+                </div>
+                <div class="mt-2 mb-1 d-flex justify-content-between">
+                    <p class="p-0 m-0 subtitle-text subtitle-text-color">Transaction Fee</p>
+                    <p class="sub-text">{{paymentInfo?.transaction_fees}}</p>
+                </div>
+                <div class="mt-2 mb-1 d-flex justify-content-between">
+                    <p class="p-0 m-0 subtitle-text subtitle-text-color">Payment Method</p>
+                    <p class="sub-text">{{paymentInfo?.method}}</p>
+                </div>
+                <div class="mt-2 mb-1 d-flex justify-content-between">
+                    <p class="p-0 m-0 subtitle-text subtitle-text-color">Status</p>
+                    <p class="sub-text">{{paymentInfo?.status}}</p>
+                </div>
+            </div>
+            <div class="d-flex justify-content-between mt-3 mb-3 mr-2">
+                <h1></h1>
+                <button printTitle="" [useExistingCss]="true" printSectionId="print-section" ngxPrint style="font-size: 15px; font-family: avenir-roman;" class="btn" mat-button color="primary">Print</button>
+            </div>
+        </mat-tab>
+    </mat-tab-group>
+
+    <div class="col-md-12 d-flex justify-content-center mt-4 mb-3">
+        <mat-spinner [hidden]="!isLoading" class="align-self-center" mode="indeterminate" [diameter]="35" [strokeWidth]="2">
+        </mat-spinner>
+    </div>
+</div>
+<div mat-dialog-actions>
+    <button mat-button (click)="cancel()">close</button>
+    <button mat-button (click)="process()">Process</button>
+</div>
