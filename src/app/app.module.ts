@@ -8,6 +8,8 @@ import { environment } from 'src/environments/environment';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { SharedModule } from './shared/shared.module';
 import { AppMaterialDesignModule } from './app-material-design.module';
+import { AdminModule } from './admin/admin.module';
+import { CoreModule } from './core/core.module';
 
 
 @NgModule({
@@ -19,7 +21,9 @@ import { AppMaterialDesignModule } from './app-material-design.module';
     AppRoutingModule,
     BrowserAnimationsModule,
     AppMaterialDesignModule,
-    SharedModule
+    SharedModule,
+    AdminModule,
+    CoreModule
   ],
   providers: [{provide: FIREBASE_OPTIONS, useValue: environment.firebaseConfig}],
   bootstrap: [AppComponent]
