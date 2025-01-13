@@ -5,6 +5,8 @@ import { CoreRoutingComponents, CoreRoutingModule } from './core-routing.module'
 import { HomeComponent } from './pages/home/home.component';
 import { LoginComponent } from './pages/account/login/login.component';
 import { RegisterComponent } from './pages/account/register/register.component';
+import { AppMaterialDesignModule } from '../app-material-design.module';
+import { SharedModule } from '../shared/shared.module';
 
 
 @NgModule({
@@ -13,7 +15,9 @@ import { RegisterComponent } from './pages/account/register/register.component';
   ],
   imports: [
     CommonModule,
-    CoreRoutingModule
+    CoreRoutingModule,
+    AppMaterialDesignModule,
+    SharedModule
   ]
 })
 export class CoreModule { }

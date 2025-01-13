@@ -1,1 +1,107 @@
-<p>login works!</p>
+<div id="recaptcha-container"></div>
+
+<main class="container" style="height: 100vh">
+  <div class="row align-items-center h-100">
+    <div class="col">
+      <form>
+        <div *ngIf="!loginFormToggle">
+          <h3 class="color-white">Enter mobile number to login</h3>
+          <div class="form-group p-0 m-0">
+            <mat-form-field appearance="outline" style="width: 100%">
+              <mat-label>Mobile number</mat-label>
+              <input
+                inputRef
+                matInput
+                [formControl]="mobileNumberFormControl"
+                type="text"
+                id="mobileNumber"
+                name="mobileNumber"
+                placeholder=""
+                required
+              />
+            </mat-form-field>
+          </div>
+          <div class="form-group">
+            <button
+              style="width: 100%; height: 40px"
+              mat-flat-button
+              color="accent"
+              [disabled]="isLoading || mobileNumberFormControl.invalid"
+              (click)="verify()"
+            >
+              <ng-template
+                [ngIf]="!isLoading"
+                [ngIfThen]="verifyButtonText"
+                [ngIfElse]="spinner"
+              >
+              </ng-template>
+            </button>
+          </div>
+          <button [disabled]="true" mat-button>I Don't have an account?</button>
+          <button routerLink="/register" mat-button>Register</button>
+        </div>
+
+        <div class="d-flex justify-content-end align-items-center">
+          <button
+            (click)="verify()"
+            mat-button
+            [hidden]="!startCountDown"
+            [disabled]="otpCountDown > 0"
+            style="font-size: 14px; width: inherit"
+            class="text-muted"
+          >
+            {{ countDownText }}
+          </button>
+        </div>
+
+        <div *ngIf="loginFormToggle">
+          <h3 class="subheading-2">
+            Enter the 6 digit code sent to your mobile number
+          </h3>
+          <div class="form-group p-0 m-0">
+            <mat-form-field appearance="outline" style="width: 100%">
+              <mat-label>One time password</mat-label>
+
+              <input
+                inputRef
+                matInput
+                [formControl]="otpFormControl"
+                type="text"
+                id="password"
+                name="mobileNumber"
+                placeholder=""
+                required
+              />
+            </mat-form-field>
+            <button
+            style="width: 100%; height: 40px"
+              mat-flat-button
+              color="primary"
+              type="submit"
+              [disabled]="isLoading || otpFormControl.invalid"
+              (click)="verifyLoginCode()"
+            >
+              <ng-template
+                [ngIf]="!isLoading"
+                [ngIfThen]="title"
+                [ngIfElse]="spinner"
+              >
+              </ng-template>
+            </button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</main>
+
+<ng-template #title> Login </ng-template>
+
+<ng-template #verifyButtonText> Verify </ng-template>
+
+<ng-template #spinner>
+  <div>
+    <mat-spinner mode="indeterminate" [diameter]="25" [strokeWidth]="2">
+    </mat-spinner>
+  </div>
+</ng-template>

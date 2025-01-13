@@ -1,0 +1,48 @@
+.alert-dialog {
+    text-align: left;
+}
+
+.alert-dialog-icon-wrapper {
+    margin: auto;
+    height: 82px;
+    width: 82px;
+    border-radius: 50%;
+    background-color: white;
+    position: relative;
+}
+
+.alert-dialog-icon-noshadow {
+    margin: auto;
+    height: 75px;
+    width: 75px;
+    border-radius: 50%;
+}
+
+.alert-dialog-icon {
+    margin: auto;
+    height: 75px;
+    width: 75px;
+    border-radius: 50%;
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
+    -webkit-transition: border-color ease-in-out .15s, -webkit-box-shadow ease-in-out .15s;
+    -o-transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
+    transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
+}
+
+.error-alert {
+    background-color: red;
+    /* padding: 10px; */
+}
+
+.success-alert {
+    background-color: #6CCF00;
+    content: "\2713";
+    /* padding: 10px; */
+}
+
+.alert-dialog-btn-done {
+    background: transparent;
+    background-color: transparent;
+    border: 1px dashed #49636F;
+    color: #6CCF00;
+}

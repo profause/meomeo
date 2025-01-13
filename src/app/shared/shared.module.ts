@@ -14,11 +14,18 @@ import { AssignDispatchDialogComponent } from './components/assign-dispatch-dial
 import { ConfirmDialogComponent } from './components/confirm-dialog/confirm-dialog.component';
 import { FoodMenuDialogComponent } from './components/food-menu-dialog/food-menu-dialog.component';
 import { MaterialProgressDialogComponent } from './components/material-progress-dialog/material-progress-dialog.component';
+import { InputTrimDirective } from './directives/input-trim.directive';
+import { NgInitDirective } from './directives/ng-init.directive';
+import { AuthGuard } from './utils/guards/auth.guard';
+import { RoleGuard } from './utils/guards/role.guard';
+import { RelativeTimePipe } from './utils/relative-time-pipe';
+import { AppbarComponent } from './components/appbar/appbar.component';
 
 
 
 @NgModule({
   declarations: [
+    AppbarComponent,
     MaterialProgressDialogComponent,
     ConfirmDialogComponent,
     AssignDispatchDialogComponent,
@@ -37,8 +44,15 @@ import { MaterialProgressDialogComponent } from './components/material-progress-
     LocalAuthService,
     DataService,
     FormBuilderService,
+    AuthGuard,
+    RoleGuard,
+    RelativeTimePipe,
+    InputTrimDirective,
+    NgInitDirective,
   ],
-  
+  exports: [
+    AppbarComponent,
+  ],
 
 })
 export class SharedModule { }

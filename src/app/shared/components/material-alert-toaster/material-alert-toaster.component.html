@@ -1,0 +1,5 @@
+<div class="container" style="position: absolute; top: auto;">
+    <div *ngIf="showAlert" [ngClass]="{ 'alert-success': alertType == 'success', 'alert-danger': alertType=='error', 'alert-info': alertType=='info'}" class="animate__animated animate__shakeX alert mt-2" role="alert">
+        <img src="{{iconUrl}}" height="28" width="28" class="mr-3" alt="">{{message}}
+    </div>
+</div>

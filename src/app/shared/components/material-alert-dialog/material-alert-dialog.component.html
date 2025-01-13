@@ -1,0 +1,19 @@
+<div mat-dialog-content class="alert-dialog">
+    <div *ngIf="data.dialogType === 'success'">
+        <!-- <div class="alert-dialog-icon success-alert">
+            <p style="font-size: 50px; color: #ffffff;">&#10003;</p>
+        </div> -->
+        <h4 class="text-bold">{{data.dialogTitle}}</h4>
+        <p class="title-text color-grey-deep">{{data.dialogMessage}}</p>
+    </div>
+    <div *ngIf="data.dialogType === 'error'">
+        <!-- <div class="alert-dialog-icon error-alert">
+            <p style="font-size: 50px; color: #ffffff;">&#10007;</p>
+        </div> -->
+        <h4 class="text-bold">{{data.dialogTitle}}</h4>
+        <p class="title-text color-grey-deep">{{data.dialogMessage}}</p>
+    </div>
+</div>
+<div mat-dialog-actions align="end" style="margin-top:10px;">
+    <button mat-button (click)="hideAlertDialog()">Ok</button>
+</div>

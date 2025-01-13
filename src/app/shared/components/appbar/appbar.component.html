@@ -1,0 +1,30 @@
+<div class="fixed-top container" style="border-bottom: 1px solid #eee; background-color: white;">
+    <div class="mt-2" style="max-height: 50px; min-height: 50px;">
+        <div class="d-flex justify-content-between align-items-center">
+            <!-- <h4 class="navbar-brand p-0 m-0" href="#">
+                {{authUser?.account?.name||'Washingbay'}}
+            </h4> -->
+            <h3 class="subheading-2 m-0">{{title}}</h3>
+            <div *ngIf="authUser.id" class="d-flex justify-content-end align-items-center">
+                <!-- <mat-icon>account_circle</mat-icon> -->
+                <button mat-icon-button [matMenuTriggerFor]="menu">
+                    <mat-icon>menu</mat-icon>
+                </button>
+            </div>
+            <mat-menu #menu="matMenu" class="mt-3">
+                <div mat-menu-item (click)="goToDashboard('')">Go to dashboard</div>
+                <div *ngIf="authUser?.role == 'ADMIN'" mat-menu-item (click)="goToDashboard('MANAGER')">Go to manager
+                    dashboard</div>
+                <div *ngIf="authUser?.role == 'ADMIN'" mat-menu-item (click)="goToDashboard('ATTENDANT')">Go to
+                    attendant dashboard</div>
+                    <div [matMenuTriggerFor]="switchAccountMenu" (onMenuOpen)="getUserAccounts()" mat-menu-item>Switch location</div>
+                <div mat-menu-item (click)="signOut()">Sign out</div>
+            </mat-menu>
+            <mat-menu #switchAccountMenu="matMenu">
+                <a *ngIf="isLoading" mat-menu-item [disabled]="true" aria-busy="true">fetching locations, please wait…</a>
+                <a class="nav-link" *ngFor="let location of locationList$ | async" mat-menu-item (click)="switchAccount(location)">{{location.name}}</a>
+                <a class="nav-link" routerLink="/account/add" mat-menu-item>Add location</a>
+            </mat-menu>
+        </div>
+    </div>
+</div>

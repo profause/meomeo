@@ -1,1 +1,189 @@
-<p>register works!</p>
+<div id="recaptcha-container"></div>
+<app-bar title="Create Account"></app-bar>
+<main class="container" style="margin-top: 80px">
+  <div class="row align-items-center h-100">
+    <div class="col">
+      <h3 class="color-white">Provide the following details</h3>
+      <form
+        [formGroup]="registerFormGroup"
+        #registerForm="ngForm"
+        name="registerFormGroup"
+        (ngSubmit)="(registerForm.valid)"
+      >
+        <div class="form-group">
+          <mat-form-field appearance="outline" style="width: 100%">
+            <mat-label>Account name</mat-label>
+            <input
+              inputTrim
+              matInput
+              formControlName="name"
+              class="text-bold"
+              type="text"
+              id="name"
+              name="name"
+              required
+              autocomplete="off"
+              placeholder="Company name"
+              [ngClass]="{
+                'is-invalid':
+                  registerForm.submitted &&
+                  registerFormGroup.get('name')?.hasError('required')
+              }"
+              aria-describedby="nameHint"
+            />
+          </mat-form-field>
+        </div>
+        <div class="form-group">
+          <mat-form-field appearance="outline" style="width: 100%">
+            <mat-label>Address / Location</mat-label>
+            <input
+              inputTrim
+              matInput
+              formControlName="address"
+              class="text-bold"
+              type="text"
+              id="address"
+              name="address"
+              required
+              autocomplete="off"
+              [ngClass]="{
+                'is-invalid':
+                  registerForm.submitted &&
+                  registerFormGroup.get('address')?.hasError('required')
+              }"
+              aria-describedby="addressHint"
+            />
+          </mat-form-field>
+        </div>
+        <div class="form-group">
+          <mat-form-field appearance="outline" style="width: 100%">
+            <mat-label>Full name</mat-label>
+            <input
+              matInput
+              formControlName="fullname"
+              class="text-bold"
+              type="text"
+              id="fullname"
+              name="fullname"
+              required
+              autocomplete="off"
+              [ngClass]="{
+                'is-invalid':
+                  registerForm.submitted &&
+                  registerFormGroup.get('fullname')?.hasError('required')
+              }"
+              aria-describedby="fullnameHint"
+            />
+          </mat-form-field>
+        </div>
+        <div class="form-group">
+          <mat-form-field appearance="outline" style="width: 100%">
+            <mat-label>Mobile number</mat-label>
+            <input
+              inputRef
+              matInput
+              formControlName="mobileNumber"
+              class="text-bold"
+              type="text"
+              id="mobileNumber"
+              name="mobileNumber"
+              autocomplete="off"
+              required
+              [ngClass]="{
+                'is-invalid':
+                  registerForm.submitted &&
+                  registerFormGroup.get('mobileNumber')?.hasError('required')
+              }"
+              aria-describedby="mobileNumberHint"
+            />
+          </mat-form-field>
+          <div *ngIf="!loginFormToggle">
+            <button
+              style="width: 100%"
+              mat-flat-button
+              color="accent"
+              type="button"
+              [disabled]="
+                isLoading ||
+                registerFormGroup.get('mobileNumber')?.hasError('required')
+              "
+              (click)="verify()"
+            >
+              <ng-template
+                [ngIf]="!isLoading"
+                [ngIfThen]="verifyButtonText"
+                [ngIfElse]="spinner"
+              >
+              </ng-template>
+            </button>
+           
+          </div>
+          <div class="d-flex justify-content-end align-items-center">
+            <button
+              mat-button
+              (click)="verify()"
+              mat-button
+              [hidden]="!startCountDown"
+              [disabled]="otpCountDown > 0"
+              style="font-size: 14px; width: inherit"
+              class="text-muted"
+            >resend
+              {{ countDownText }}
+            </button>
+          </div>
+          <div *ngIf="loginFormToggle">
+            <h3 class="subheading-2 color-white">
+              Enter the 6 digit code sent to your mobile number
+            </h3>
+            <mat-form-field appearance="outline" style="width: 100%">
+              <mat-label>One time password</mat-label>
+              <input
+                matInput
+                formControlName="otp"
+                type="text"
+                name="otp"
+                placeholder=""
+                required
+              />
+            </mat-form-field>
+            <button
+              mat-flat-button
+              type="submit"
+              color="accent"
+              [disabled]="
+                isLoading || registerFormGroup.get('otp')?.hasError('required')
+              "
+              (click)="verifyLoginCode()"
+            >
+              <ng-template
+                [ngIf]="!isLoading"
+                [ngIfThen]="title"
+                [ngIfElse]="spinner"
+              >
+              </ng-template>
+            </button>
+          </div>
+          <div class="form-group mt-0 pt-0 mb-0 pb-0">
+            <button [disabled]="true" mat-button>
+              I already have an account.
+            </button>
+          </div>
+          <div class="form-group mt-0 pt-0">
+            <button style="width: 100%" routerLink="/login" mat-button>
+              Login
+            </button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</main>
+
+<ng-template #title> Create account </ng-template>
+
+<ng-template #verifyButtonText> Verify </ng-template>
+
+<ng-template #spinner>
+  <mat-spinner mode="indeterminate" [diameter]="25" [strokeWidth]="3">
+  </mat-spinner>
+</ng-template>

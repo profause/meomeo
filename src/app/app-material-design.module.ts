@@ -16,13 +16,15 @@ import {MatCardModule} from '@angular/material/card';
 import {MatToolbarModule} from '@angular/material/toolbar';
 import {MatCheckboxModule} from '@angular/material/checkbox';
 import {MatSlideToggleModule} from '@angular/material/slide-toggle';
-import { Observable } from 'rxjs';
-import { DialogOptions, DialogService } from './shared/services/dialog.service';
+import { finalize, interval, Observable, of, scan, take } from 'rxjs';
+import { DialogOptions, DialogService, DialogType } from './shared/services/dialog.service';
 import {MatDividerModule} from '@angular/material/divider';
 import {MatRadioModule} from '@angular/material/radio';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import {MatListModule} from '@angular/material/list';
+import { AlertService, AlertType } from './shared/services/alert.service';
+import { MaterialAlertDialogComponent } from './shared/components/material-alert-dialog/material-alert-dialog.component';
 
 
 
@@ -47,7 +49,7 @@ const materialDesignComponents = [
     MatRadioModule,
     MatMenuModule,
     MatSidenavModule,
-    MatListModule
+    MatListModule,
 ];
 @NgModule({
     imports: [materialDesignComponents],
@@ -55,8 +57,10 @@ const materialDesignComponents = [
 })
 export class AppMaterialDesignModule {
     private dialogRef!: MatDialogRef<any>;
+    private alertDialogRef!: MatDialogRef<any>;
     constructor(public matDialog: MatDialog,
-        public dialogService: DialogService,) { }
+        public dialogService: DialogService,
+        public alertService: AlertService) { }
 
     showProgressDialog(title: string): MatDialogRef<any> {
         this.dialogRef = this.matDialog.open(MaterialProgressDialogComponent, {
@@ -97,5 +101,40 @@ export class AppMaterialDesignModule {
             console.log('The dialog was closed');
         });
         return this.dialogService.getMessage();
+    }
+
+    public showAlertToaster(type: AlertType, message: string, duration: number = 4): Observable<any> {
+        //console.log('show this message : ' + message);
+        //console.log('start the countdown : ' + duration);
+        const counter$ = interval(1000);
+        const numberOfSeconds = duration;
+        //return
+        this.alertService.showAlert(type,message);
+        counter$.pipe(
+            scan((accumulator, _current) => accumulator - 1, numberOfSeconds + 1),
+            take(numberOfSeconds + 1),
+            finalize(() => {
+                //console.log('dismiss alert toaster')
+                this.alertService.dismissAlert();
+            })
+        ).subscribe()
+
+        return of(null)
+    }
+
+    showAlertDialog(type: DialogType, title: string, message: string): Observable<any> {
+        this.alertDialogRef = this.matDialog.open(MaterialAlertDialogComponent, {
+            width: '400px',
+            data: { dialogTitle: title, dialogMessage: message, dialogType: type },
+            disableClose: true,
+            autoFocus: true
+        });
+
+        this.alertDialogRef.afterClosed().subscribe(result => {
+            console.log('The dialog was closed');
+        });
+
+        return this.alertDialogRef.afterClosed();
+
     }
 }

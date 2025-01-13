@@ -1,8 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { from, Observable } from 'rxjs';
+import { forkJoin, from, Observable } from 'rxjs';
 import { take } from 'rxjs/operators';
-import { Account } from '../models/account.interface';
 import { OrderItem } from '../models/order-item';
 import { PaymentInfo } from '../models/payment-info';
 import { Setting } from '../models/setting';
@@ -110,8 +109,12 @@ export class BackendService {
     ).snapshotChanges().pipe(take(1));
   }
 
-  createAccount(account: Account): Observable<any> {
-    return from(this.firestore.collection(`/accounts`).add({ ...account }));
+  createAccount(account: any, user: any): Observable<any> {
+    let result = forkJoin([
+      from(this.firestore.doc(`/accounts/${account.id}`).set({ ...account })),
+      from(this.firestore.doc(`/users/${user.id}`).set({ ...user })),
+    ]);
+    return result;
   }
 
   updateOrderStatus(orderId: string, kitchenId: string, status: string): Observable<any> {
@@ -165,4 +168,17 @@ export class BackendService {
     return this.getAccountListByType('dispatch');
   }
 
+
+  getUserAccount(accountId: string): Observable<any> {
+    return this.firestore.doc(`/accounts/${accountId}`).valueChanges();
+  }
+
+  getUserAccounts(userId: string): Observable<any> {
+    return this.firestore
+      .collection(`accounts`, (ref) =>
+        ref.where('createdBy', '==', userId).orderBy('dateCreated', 'desc')
+      )
+      .snapshotChanges()
+      .pipe(take(1));
+  }
 }

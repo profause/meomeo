@@ -14,7 +14,7 @@ export class RoleGuard implements CanActivate {
     next: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
 
-    let params = next.data.params as Array<string>;
+    //let params = next.data.params as Array<string>;
 
     // if (!this.localAuthService.isAuthenticated()) {
     //   this.router.navigate(['/login']);
