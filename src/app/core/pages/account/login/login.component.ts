@@ -1,4 +1,11 @@
-import { AfterViewInit, Component, inject, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
+import {
+  AfterViewInit,
+  Component,
+  inject,
+  OnDestroy,
+  OnInit,
+  ViewEncapsulation,
+} from '@angular/core';
 import { getAuth, RecaptchaVerifier } from '@angular/fire/auth';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { FormControl, Validators } from '@angular/forms';
@@ -14,7 +21,9 @@ import { DataService } from 'src/app/shared/services/data.service';
 import { DialogType } from 'src/app/shared/services/dialog.service';
 import { LocalAuthService } from 'src/app/shared/services/local-auth.service';
 import { WindowService } from 'src/app/shared/services/window.service';
-import { Utils } from 'src/app/shared/utils/utils';
+// import {
+//   getAuth,RecaptchaVerifier,signInWithPhoneNumber,
+//   } from "firebase/auth";
 
 @Component({
   selector: 'app-login',
@@ -22,7 +31,7 @@ import { Utils } from 'src/app/shared/utils/utils';
   styleUrls: ['./login.component.scss'],
   encapsulation: ViewEncapsulation.None,
 })
-export class LoginComponent implements OnInit, AfterViewInit, OnDestroy{
+export class LoginComponent implements OnInit, AfterViewInit, OnDestroy {
   public isLoading = false;
   public loginFormToggle = false;
   windowRef: any;
@@ -31,10 +40,11 @@ export class LoginComponent implements OnInit, AfterViewInit, OnDestroy{
   public otpFormControl: FormControl;
   public hidePassword = true;
   private unSubscriptioNotifier = new Subject();
-  public otpCountDown: number
-  public startCountDown = false
-  public countDownText  = ''
+  public otpCountDown: number;
+  public startCountDown = false;
+  public countDownText = '';
   private auth = getAuth();
+  private recaptchaVerifier: RecaptchaVerifier;
 
   constructor(
     public router: Router,
@@ -58,7 +68,6 @@ export class LoginComponent implements OnInit, AfterViewInit, OnDestroy{
     ]);
   }
 
-
   ngOnInit(): void {
     //this.localAuth.defaultLogin()
 
@@ -68,30 +77,32 @@ export class LoginComponent implements OnInit, AfterViewInit, OnDestroy{
     //this.appMaterialComponent.showProgressDialog('loading...')
   }
 
-  startOtpCountDown(seconds:number){
+  startOtpCountDown(seconds: number) {
     this.startCountDown = true;
-    var timeinterval = setInterval(()=>{
+    var timeinterval = setInterval(() => {
       seconds -= 1;
-      this.otpCountDown  = seconds
-      this.countDownText = `Resend in ${seconds}`
+      this.otpCountDown = seconds;
+      this.countDownText = `Resend in ${seconds}`;
       //console.log("seconds : "+seconds)
       if (seconds <= 0) {
         clearInterval(timeinterval);
-        this.countDownText = `Resend now`
+        this.countDownText = `Resend now`;
       }
     }, 1000);
   }
 
   ngAfterViewInit(): void {
     this.windowRef = this.win.windowRef;
-    this.windowRef.recaptchaVerifier = new RecaptchaVerifier(this.auth,
-      'recaptcha-container',
-      {
-        size: 'invisible',
-        callback: () => {},
-      }
-    );
-    this.windowRef.recaptchaVerifier.render();
+      this.windowRef.recaptchaVerifier = new RecaptchaVerifier(
+        this.auth,
+        'recaptcha-container',
+        {
+          size: 'invisible',
+          callback: () => {},
+        }
+      );
+      this.windowRef.recaptchaVerifier.render();
+    
   }
 
   public sendLoginCode(num: string) {
@@ -121,7 +132,7 @@ export class LoginComponent implements OnInit, AfterViewInit, OnDestroy{
         this.isLoading = false;
         this.loginFormToggle = true;
         this.windowRef.confirmationResult = result;
-        this.startOtpCountDown(60)
+        this.startOtpCountDown(60);
       })
       .catch((error) => {
         this.isLoading = false;
@@ -291,5 +302,6 @@ export class LoginComponent implements OnInit, AfterViewInit, OnDestroy{
   ngOnDestroy(): void {
     this.unSubscriptioNotifier.next('');
     this.unSubscriptioNotifier.complete();
+    this.windowRef.recaptchaVerifier.clear();
   }
 }

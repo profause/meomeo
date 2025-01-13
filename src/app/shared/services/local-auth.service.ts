@@ -25,7 +25,7 @@ export class LocalAuthService {
   public defaultLogin() {
     const u = Utils.decrypt(environment.username);
     const p = Utils.decrypt(environment.password);
-    console.log('result : ' + u)
+    //console.log('result : ' + u)
     this.fireAuth
       .signInWithEmailAndPassword(u, p)
       .then((result) => {

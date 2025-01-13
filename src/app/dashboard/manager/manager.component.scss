@@ -1,0 +1,56 @@
+.list > li {
+  list-style-type: none;
+  margin-left: 0;
+  margin-top: 10px;
+  list-style: none;
+  position: relative;
+  padding: 0 0 0 20px;
+}
+
+.list {
+  line-height: 1.5em;
+  margin: 5px 0 15px;
+  padding: 0;
+}
+
+.list > li.circle-checkmark::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 5px;
+  border: solid 8px #36454f;
+  border-radius: 8px;
+}
+
+.list > li.circle-checkmark::after {
+  content: "";
+  position: absolute;
+  left: 5px;
+  top: 7px;
+  width: 5px;
+  height: 10px;
+  border: solid #ffffff;
+  border-width: 0 2px 2px 0;
+  transform: rotate(45deg);
+}
+
+.color-white {
+  color: #ffffff;
+}
+
+.color-dark-cyan-blue {
+  color: #36454f;
+}
+
+.font-poppins {
+  font-family: "Poppins", sans-serif;
+}
+
+.font-weight-300 {
+  font-weight: 300 !important;
+  font-size: 15px;
+}
+
+.card0{
+  border: none;
+}

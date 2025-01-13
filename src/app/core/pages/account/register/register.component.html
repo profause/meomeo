@@ -39,19 +39,19 @@
             <input
               inputTrim
               matInput
-              formControlName="address"
+              formControlName="location"
               class="text-bold"
               type="text"
-              id="address"
-              name="address"
+              id="location"
+              name="location"
               required
               autocomplete="off"
               [ngClass]="{
                 'is-invalid':
                   registerForm.submitted &&
-                  registerFormGroup.get('address')?.hasError('required')
+                  registerFormGroup.get('location')?.hasError('required')
               }"
-              aria-describedby="addressHint"
+              aria-describedby="locationHint"
             />
           </mat-form-field>
         </div>
@@ -164,14 +164,14 @@
             </button>
           </div>
           <div class="form-group mt-0 pt-0 mb-0 pb-0">
-            <button [disabled]="true" mat-button>
+            <button type="button" [disabled]="true" mat-button>
               I already have an account.
             </button>
           </div>
           <div class="form-group mt-0 pt-0">
-            <button style="width: 100%" routerLink="/login" mat-button>
+            <a type="button" style="width: 100%" href="/account/login" mat-button>
               Login
-            </button>
+            </a>
           </div>
         </div>
       </form>

@@ -15,6 +15,10 @@ import { provideAuth, getAuth } from '@angular/fire/auth';
 import { HttpClientModule } from '@angular/common/http';
 import { AngularFireAuthModule } from '@angular/fire/compat/auth';
 
+import * as firebase from 'firebase/app';
+import { DashboardModule } from './dashboard/dashboard.module';
+
+firebase.initializeApp(environment.firebaseConfig);
 
 @NgModule({
   declarations: [
@@ -26,13 +30,18 @@ import { AngularFireAuthModule } from '@angular/fire/compat/auth';
     BrowserAnimationsModule,
     HttpClientModule,
     AngularFireModule.initializeApp(environment.firebaseConfig),
+    provideFirebaseApp(() => initializeApp(environment.firebaseConfig)),
+    provideAuth(() => getAuth()),
     AngularFireAuthModule,
     AppMaterialDesignModule,
     SharedModule,
     AdminModule,
-    CoreModule
+    CoreModule,
+    DashboardModule
   ],
-  providers: [{provide: FIREBASE_OPTIONS, useValue: environment.firebaseConfig},
+  providers: [
+    {provide: FIREBASE_OPTIONS, useValue: environment.firebaseConfig},
+    
    
   ],
   bootstrap: [AppComponent]

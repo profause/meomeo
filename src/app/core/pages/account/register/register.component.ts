@@ -25,9 +25,9 @@ export class RegisterComponent {
   public registerFormGroup: FormGroup;
   private unSubscriptioNotifier = new Subject();
   public loginFormToggle = false;
-  public otpCountDown: number
-  public startCountDown = false
-  public countDownText  = ''
+  public otpCountDown: number;
+  public startCountDown = false;
+  public countDownText = '';
   windowRef: any;
   user: User = {};
   public isLoading = false;
@@ -45,7 +45,7 @@ export class RegisterComponent {
     this.registerFormGroup = new FormGroup({
       id: new FormControl(Utils.generateUUID(), Validators.nullValidator),
       name: new FormControl('', Validators.required),
-      address: new FormControl('', Validators.required),
+      location: new FormControl('', Validators.required),
       dateCreated: new FormControl(
         new Date().getTime().toString(),
         Validators.nullValidator
@@ -58,34 +58,33 @@ export class RegisterComponent {
     });
   }
 
-  ngOnInit(): void {
-    
-  }
+  ngOnInit(): void {}
 
-  startOtpCountDown(seconds:number){
+  startOtpCountDown(seconds: number) {
     this.startCountDown = true;
-    var timeinterval = setInterval(()=>{
+    var timeinterval = setInterval(() => {
       seconds -= 1;
-      this.otpCountDown  = seconds
-      this.countDownText = `Resend in ${seconds}`
+      this.otpCountDown = seconds;
+      this.countDownText = `Resend in ${seconds}`;
       //console.log("seconds : "+seconds)
       if (seconds <= 0) {
         clearInterval(timeinterval);
-        this.countDownText = `Resend now`
+        this.countDownText = `Resend now`;
       }
     }, 1000);
   }
 
   ngAfterViewInit(): void {
     this.windowRef = this.win.windowRef;
-    this.windowRef.recaptchaVerifier = new RecaptchaVerifier(this.auth,
-      'recaptcha-container',
-      {
-        size: 'invisible',
-        callback: () => {},
-      }
-    );
-    this.windowRef.recaptchaVerifier.render();
+      this.windowRef.recaptchaVerifier = new RecaptchaVerifier(
+        this.auth,
+        'recaptcha-container',
+        {
+          size: 'invisible',
+          callback: () => {},
+        }
+      );
+      this.windowRef.recaptchaVerifier.render();
   }
 
   public sendLoginCode(num: string) {
@@ -113,7 +112,7 @@ export class RegisterComponent {
         this.isLoading = false;
         this.loginFormToggle = true;
         this.windowRef.confirmationResult = result;
-        this.startOtpCountDown(60)
+        this.startOtpCountDown(60);
       })
       .catch((error) => {
         this.isLoading = false;
@@ -223,7 +222,7 @@ export class RegisterComponent {
       name: formData['name'],
     };
 
-    this.user.account = formData['id'];
+   //this.user.account = formData['id'];
 
     //console.log('user ', this.user);
     this.localAuth.setUser(this.user);
@@ -255,5 +254,6 @@ export class RegisterComponent {
   ngOnDestroy(): void {
     this.unSubscriptioNotifier.next('');
     this.unSubscriptioNotifier.complete();
+    this.windowRef.recaptchaVerifier.clear();
   }
 }

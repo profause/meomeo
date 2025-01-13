@@ -23,6 +23,7 @@
           </div>
           <div class="form-group">
             <button
+              type="button"
               style="width: 100%; height: 40px"
               mat-flat-button
               color="accent"
@@ -37,12 +38,19 @@
               </ng-template>
             </button>
           </div>
-          <button [disabled]="true" mat-button>I Don't have an account?</button>
-          <button routerLink="/register" mat-button>Register</button>
+          <div class="d-flex justify-content-center mt-0 pt-0">
+            <button type="button" [disabled]="true" mat-button>
+              I Don't have an account?
+            </button>
+          </div>
+          <div class="d-flex justify-content-center mt-0 pt-0">
+            <a type="button" href="/account/register" mat-button>Register</a>
+          </div>
         </div>
 
         <div class="d-flex justify-content-end align-items-center">
           <button
+            type="button"
             (click)="verify()"
             mat-button
             [hidden]="!startCountDown"
@@ -74,9 +82,9 @@
               />
             </mat-form-field>
             <button
-            style="width: 100%; height: 40px"
+              style="width: 100%; height: 40px"
               mat-flat-button
-              color="primary"
+              color="accent"
               type="submit"
               [disabled]="isLoading || otpFormControl.invalid"
               (click)="verifyLoginCode()"
