@@ -85,7 +85,7 @@
       </article>
     </div>
     <div class="col-6">
-      <article class="m-0 mb-3 p-2" style="background-color: #7e91f1">
+      <article class="m-0 mb-3 p-2" style="background-color: #246579">
         <div
           [bdcWalkTriggerFor]="bdcaddUser"
           class="d-flex justify-content-between align-items-center"
@@ -94,7 +94,7 @@
           <a
             class="color-white"
             style="text-decoration: none"
-            [routerLink]="['/admin/setup']"
+            [routerLink]="['/admin/setup']"[queryParams]="{tab: 'account'}"
             mat-button
           >
             More

@@ -13,6 +13,7 @@ import { Sale } from '../models/sale.interface';
 import * as moment from 'moment';
 import { Timestamp } from '@firebase/firestore';
 import { Section } from '../models/section.interface';
+import { Account } from '../models/account.interface';
 @Injectable({
   providedIn: 'root',
 })
@@ -64,12 +65,6 @@ export class BackendService {
 
   createUser(user: User): Observable<any> {
     return from(this.firestore.doc(`/users/${user.id}`).set({ ...user }));
-  }
-
-  updateUser(user: User): Observable<any> {
-    return from(
-      this.firestore.doc(`/users/${user.id}`).update({ ...user })
-    ).pipe(take(1));
   }
 
   getUser(user_id: string): Observable<any> {
@@ -476,5 +471,49 @@ export class BackendService {
 
   deleteSection(id: string): Observable<any> {
     return from(this.firestore.doc<Section>(`/sections/${id}`).delete());
+  }
+
+  deleteUser(id: string): Observable<any> {
+    return from(this.firestore.doc<User>(`/users/${id}`).delete());
+  }
+
+
+  addUser(user: any): Observable<any> {
+    return from(this.firestore.doc(`/users/${user.id}`).set({ ...user }));
+  }
+
+  updateUser(user: any): Observable<any> {
+    return from(this.firestore.doc(`/users/${user.id}`).update({ ...user }));
+  }
+
+  deleteUserAccount(id: string) {
+    return from(this.firestore.doc<Account>(`/accounts/${id}`).delete());
+  }
+
+  updateAccount(account: any, user: any) {
+    let result = forkJoin([
+      from(
+        this.firestore.doc(`/accounts/${account.id}`).update({ ...account })
+      ),
+      from(
+        this.firestore
+          .doc(`/users/${user.id}/account`)
+          .update({ name: account.name, address: account.address })
+      ),
+    ]);
+
+    return result;
+  }
+
+  addAccount(account: any, user: any): Observable<any> {
+    let result = forkJoin([
+      from(this.firestore.doc(`/accounts/${account.id}`).set({ ...account })),
+      from(
+        this.firestore
+          .doc(`/users/${user.id}`)
+          .update({ accounts: user.accounts })
+      ),
+    ]);
+    return result;
   }
 }

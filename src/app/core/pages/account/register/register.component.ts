@@ -204,7 +204,7 @@ export class RegisterComponent implements OnDestroy{
     let account: Account = {
       id: formData['id'],
       name: formData['name'],
-      location: formData['location'],
+      address: formData['address'],
       dateCreated: formData['dateCreated'],
       status: formData['status'],
       createdBy: formData['id'],

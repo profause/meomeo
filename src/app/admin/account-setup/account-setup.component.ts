@@ -31,7 +31,7 @@ export class AccountSetupComponent implements OnInit, OnDestroy {
     this.accountFormGroup = new FormGroup({
       id: new FormControl('', Validators.nullValidator),
       name: new FormControl('', Validators.required),
-      location: new FormControl('', Validators.required),
+      address: new FormControl('', Validators.required),
       dateCreated: new FormControl(
         new Date().getTime().toString(),
         Validators.nullValidator
@@ -58,7 +58,7 @@ export class AccountSetupComponent implements OnInit, OnDestroy {
         this.accountFormGroup.patchValue({
           id: account.id,
           name: account.name,
-          location: account.location,
+          address: account.address,
           dateCreated: account.dateCreated,
           fullname: this.user.fullname,
           mobileNumber: this.user.mobileNumber,

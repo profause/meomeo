@@ -6,6 +6,7 @@ export interface User {
   fullname?: string;
   mobileNumber?: string | null;
   account?: any | Account;
+  accounts?:string[];
   role?: string;
   isAuthenticated?: boolean;
   dateCreated?: string;
