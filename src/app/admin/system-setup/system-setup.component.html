@@ -8,23 +8,37 @@
         <li class="breadcrumb-item active" aria-current="page">setup</li>
       </ol>
     </nav>
-    <div class="col-12">
+    <div class="col-12 mt-1 pt-1 pb-2">
     <mat-drawer-container class="example-container">
         <mat-drawer #drawer [mode]="'side'" [opened]="true">
             <div class="nav flex-column nav-pills mr-4" id="v-pills-tab" role="tablist" aria-orientation="vertical">
-                <a routerLink="admin/setup?tab=account" class="nav-link" id="v-pills-home-tab" data-toggle="pill" data-target="#v-pills-home" type="button" role="tab" aria-controls="v-pills-home" aria-selected="false">Account</a>
-                <a routerLink="admin/setup?tab=subscription" class="nav-link" id="v-pills-home-tab" data-toggle="pill" data-target="#v-pills-home" type="button" role="tab" aria-controls="v-pills-home" aria-selected="false">Subscription</a>
-                <button class="nav-link active" id="v-pills-profile-tab" data-toggle="pill" data-target="#v-pills-profile" type="button" role="tab" aria-controls="v-pills-profile" aria-selected="true">Profile</button>
-                <button class="nav-link" id="v-pills-messages-tab" data-toggle="pill" data-target="#v-pills-messages" type="button" role="tab" aria-controls="v-pills-messages" aria-selected="false">Messages</button>
-                <button class="nav-link" id="v-pills-settings-tab" data-toggle="pill" data-target="#v-pills-settings" type="button" role="tab" aria-controls="v-pills-settings" aria-selected="false">Settings</button>
+                <a class="nav-link" [ngClass]="{'active': tab=='account'}" [routerLink]="['/admin/setup']"[queryParams]="{tab: 'account'}" role="tab">Account</a>
+                <a class="nav-link" [ngClass]="{'active': tab=='subscription'}" [routerLink]="['/admin/setup']"[queryParams]="{tab: 'subscription'}" role="tab">Subscription</a>
+                <a class="nav-link" [ngClass]="{'active': tab=='layout'}" [routerLink]="['/admin/setup']"[queryParams]="{tab: 'layout'}" role="tab">Layout and sections</a>
+
               </div>
         </mat-drawer>
         <mat-drawer-content>
-          
-          <!-- <button mat-raised-button (click)="drawer.toggle()">Toggle drawer</button> -->
-          <div class="tab-pane fade show active" id="v-pills-home" role="tabpanel" aria-labelledby="v-pills-home-tab">...</div>
+            <div  class="p-2" [ngSwitch]="tab">
+                <ng-container [ngTemplateOutlet]="accountSetupTemplate" *ngSwitchCase="'account'">
+                </ng-container>
+                <ng-container [ngTemplateOutlet]="subscriptionTemplate" *ngSwitchCase="'subscription'">
+                </ng-container>
+                <ng-container [ngTemplateOutlet]="LayoutTemplate" *ngSwitchCase="'layout'">
+                </ng-container>
+            </div>
         </mat-drawer-content>
       </mat-drawer-container>
     </div>
   </div>
 </main>
+
+<ng-template #accountSetupTemplate>
+    <app-account-setup></app-account-setup>
+</ng-template>
+<ng-template #subscriptionTemplate>
+   <app-subscription></app-subscription>
+</ng-template>
+<ng-template #LayoutTemplate>
+    <app-layout></app-layout>
+ </ng-template>

@@ -1,4 +1,4 @@
-import { Component, ViewEncapsulation } from '@angular/core';
+import { Component, OnDestroy, ViewEncapsulation } from '@angular/core';
 import { getAuth, RecaptchaVerifier } from '@angular/fire/auth';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
@@ -21,7 +21,7 @@ import { Utils } from 'src/app/shared/utils/utils';
   styleUrls: ['./register.component.scss'],
   encapsulation: ViewEncapsulation.None,
 })
-export class RegisterComponent {
+export class RegisterComponent implements OnDestroy{
   public registerFormGroup: FormGroup;
   private unSubscriptioNotifier = new Subject();
   public loginFormToggle = false;

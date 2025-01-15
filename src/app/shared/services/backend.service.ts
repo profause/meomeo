@@ -11,7 +11,8 @@ import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { LocalAuthService } from './local-auth.service';
 import { Sale } from '../models/sale.interface';
 import * as moment from 'moment';
-import { Timestamp } from "@firebase/firestore";
+import { Timestamp } from '@firebase/firestore';
+import { Section } from '../models/section.interface';
 @Injectable({
   providedIn: 'root',
 })
@@ -242,7 +243,7 @@ export class BackendService {
   }
 
   getCustomerCount(): Observable<number> {
-    this.authUser  = this.localAuth.getUser();
+    this.authUser = this.localAuth.getUser();
     return this.firestore
       .collection<Sale>(`/sales`, (ref) =>
         ref.where('accountId', '==', this.authUser.account.id)
@@ -251,18 +252,20 @@ export class BackendService {
       .pipe(
         take(1),
         map((results) => {
-          return [
-            ...new Set(
-              results
-                .map((item) => {
-                  return {
-                    id: item.payload.doc.id,
-                    ...item.payload.doc.data(),
-                  } as Sale;
-                })
-                .map((item) => item.customerName)
-            ),
-          ].length || 0;
+          return (
+            [
+              ...new Set(
+                results
+                  .map((item) => {
+                    return {
+                      id: item.payload.doc.id,
+                      ...item.payload.doc.data(),
+                    } as Sale;
+                  })
+                  .map((item) => item.customerName)
+              ),
+            ].length || 0
+          );
         })
       );
   }
@@ -277,7 +280,7 @@ export class BackendService {
   }
 
   getAttendantCount(): Observable<number> {
-    this.authUser  = this.localAuth.getUser();
+    this.authUser = this.localAuth.getUser();
     return this.firestore
       .collection(`users`, (ref) =>
         ref
@@ -294,7 +297,7 @@ export class BackendService {
   }
 
   getSalesCount(): Observable<number> {
-    this.authUser  = this.localAuth.getUser();
+    this.authUser = this.localAuth.getUser();
     return this.firestore
       .collection<Sale>(`/sales`, (ref) =>
         ref.where('accountId', '==', this.authUser.account.id)
@@ -378,8 +381,16 @@ export class BackendService {
         }
         break;
       case 'THIS_WEEK':
-        var startOfWeek = moment().startOf('week').toDate().getMilliseconds().toString();
-        var endOfWeek = moment().endOf('week').toDate().getMilliseconds().toString();
+        var startOfWeek = moment()
+          .startOf('week')
+          .toDate()
+          .getMilliseconds()
+          .toString();
+        var endOfWeek = moment()
+          .endOf('week')
+          .toDate()
+          .getMilliseconds()
+          .toString();
 
         data = this.firestore
           .collection<Sale>(`/sales`, (ref) =>
@@ -392,8 +403,16 @@ export class BackendService {
           .snapshotChanges();
         break;
       case 'THIS_MONTH':
-        var startOfMonth = moment().startOf('month').toDate().getMilliseconds().toString();
-        var endOfMonth = moment().endOf('month').toDate().getMilliseconds().toString();
+        var startOfMonth = moment()
+          .startOf('month')
+          .toDate()
+          .getMilliseconds()
+          .toString();
+        var endOfMonth = moment()
+          .endOf('month')
+          .toDate()
+          .getMilliseconds()
+          .toString();
 
         data = this.firestore
           .collection<Sale>(`/sales`, (ref) =>
@@ -406,8 +425,16 @@ export class BackendService {
           .snapshotChanges();
         break;
       case 'THIS_YEAR':
-        var startOfYear = moment().startOf('year').toDate().getMilliseconds().toString();
-        var endOfYear = moment().endOf('year').toDate().getMilliseconds().toString();
+        var startOfYear = moment()
+          .startOf('year')
+          .toDate()
+          .getMilliseconds()
+          .toString();
+        var endOfYear = moment()
+          .endOf('year')
+          .toDate()
+          .getMilliseconds()
+          .toString();
 
         data = this.firestore
           .collection<Sale>(`/sales`, (ref) =>
@@ -430,5 +457,24 @@ export class BackendService {
     }
 
     return data;
+  }
+
+  getSections(): Observable<any> {
+    return this.firestore
+      .collection<User>(`/sections`, (ref) =>
+        ref.where('accountId', '==', this.authUser.account.id)
+      )
+      .snapshotChanges()
+      .pipe(take(1));
+  }
+
+  createSection(section: Section) {
+    return from(
+      this.firestore.doc(`/sections/${section.id}`).set({ ...section })
+    );
+  }
+
+  deleteSection(id: string): Observable<any> {
+    return from(this.firestore.doc<Section>(`/sections/${id}`).delete());
   }
 }

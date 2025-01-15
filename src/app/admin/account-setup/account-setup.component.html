@@ -1,0 +1,132 @@
+<div>
+  <form
+    [formGroup]="accountFormGroup"
+    #registerForm="ngForm"
+    name="accountFormGroup"
+    (ngSubmit)="(registerForm.valid)"
+  >
+    <div class="form-row">
+      <div class="col-6">
+        <mat-form-field appearance="outline" style="width: 100%">
+          <mat-label>Account name</mat-label>
+          <input
+            inputTrim
+            matInput
+            formControlName="name"
+            class="text-bold"
+            type="text"
+            id="name"
+            name="name"
+            required
+            autocomplete="off"
+            placeholder="Company name"
+            [ngClass]="{
+              'is-invalid':
+                registerForm.submitted &&
+                accountFormGroup.get('name')?.hasError('required')
+            }"
+            aria-describedby="nameHint"
+          />
+        </mat-form-field>
+      </div>
+      <div class="col-6">
+        <mat-form-field appearance="outline" style="width: 100%">
+          <mat-label>Address / Location</mat-label>
+          <input
+            inputTrim
+            matInput
+            formControlName="location"
+            class="text-bold"
+            type="text"
+            id="location"
+            name="location"
+            required
+            autocomplete="off"
+            [ngClass]="{
+              'is-invalid':
+                registerForm.submitted &&
+                accountFormGroup.get('location')?.hasError('required')
+            }"
+            aria-describedby="locationHint"
+          />
+        </mat-form-field>
+      </div>
+      <div class="col-6">
+        <mat-form-field appearance="outline" style="width: 100%">
+          <mat-label>Full name</mat-label>
+          <input
+            matInput
+            formControlName="fullname"
+            class="text-bold"
+            type="text"
+            id="fullname"
+            name="fullname"
+            required
+            autocomplete="off"
+            [ngClass]="{
+              'is-invalid':
+                registerForm.submitted &&
+                accountFormGroup.get('fullname')?.hasError('required')
+            }"
+            aria-describedby="fullnameHint"
+          />
+        </mat-form-field>
+      </div>
+      <div class="col-6">
+        <mat-form-field appearance="outline" style="width: 100%">
+          <mat-label>Mobile number</mat-label>
+          <input
+            inputRef
+            matInput
+            formControlName="mobileNumber"
+            class="text-bold"
+            type="text"
+            id="mobileNumber"
+            name="mobileNumber"
+            autocomplete="off"
+            required
+            [ngClass]="{
+              'is-invalid':
+                registerForm.submitted &&
+                accountFormGroup.get('mobileNumber')?.hasError('required')
+            }"
+            aria-describedby="mobileNumberHint"
+          />
+        </mat-form-field>
+      </div>
+      <div class="col-12">
+        <div class="d-flex justify-content-end align-items-center">
+            <button
+              mat-button
+              color="accent"
+              (click)="save()"
+              mat-flat-button
+              [disabled]="
+              isLoading ||
+              accountFormGroup.get('mobileNumber')?.hasError('required')"
+              style="font-size: 14px; width: inherit">
+              Save
+            </button>
+          </div>
+      </div>
+      <div class="col">
+        <div>
+            <h3 class="p-0 m-0 text-muted">Account status</h3>
+            <p class="p-0 m-0">{{accountFormGroup.get('status').value}}</p>
+        </div>
+      </div>
+      <div class="col">
+        <div>
+            <h3 class="p-0 m-0 text-muted">Date created</h3>
+            <p class="p-0 m-0">{{accountFormGroup.get('dateCreated').value | date}}</p>
+        </div>
+      </div>
+      <div class="col">
+        <div>
+            <h3 class="p-0 m-0 text-muted">Trail Period</h3>
+            <p class="p-0 m-0">{{accountFormGroup.get('isTrialPeriodDue').value || false}}</p>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>
