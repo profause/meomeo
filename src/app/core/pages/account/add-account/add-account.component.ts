@@ -41,6 +41,10 @@ export class AddAccountComponent implements OnInit, OnDestroy {
         Validators.nullValidator
       ),
       status: new FormControl('ACTIVE', Validators.nullValidator),
+      logo: new FormControl(
+        'assets/icons/restaurant_menu_icon.png',
+        Validators.nullValidator
+      ),
     });
   }
 

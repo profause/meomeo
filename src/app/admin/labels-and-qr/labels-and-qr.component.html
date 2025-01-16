@@ -1,6 +1,7 @@
-<div class="row" style="min-width: 100%;">
+<div>
   <h2>Lables and QR code</h2>
   <hr />
+  <div class="row">
   <div class="col-12">
     <mat-form-field appearance="outline" style="width: 100%">
       <mat-label>Table name pattern</mat-label>
@@ -34,27 +35,34 @@
       </button>
     </div>
   </div>
-  <div class="col-12 mt-3 p-1">
+  <div class="col-12 mt-3">
     <h4 class="">List of Labels and QR code</h4>
     <div class="table-responsive bg-white rounded" style="max-height: 520px">
-      <table class="table bg-white table-striped table-sm">
+      <table class="table bg-white table-striped table-md">
         <thead>
           <tr>
-            <th scope="col">Name</th>
-            <th scope="col">Number of table</th>
-            <th scope="col">Table name pattern</th>
+            <th scope="col">Label</th>
+            <th scope="col">Url</th>
+            <th scope="col">QR code</th>
             <th scope="col"></th>
           </tr>
         </thead>
         <tbody>
-          <tr *ngFor="let section of sectionList$ | async; let i = index">
-            <th scope="row">{{ section?.name }}</th>
-            <td>{{ section?.numberOfTables }}</td>
-            <td>{{ section.tableNamePattern }}</td>
+          <tr *ngFor="let label of labelList$ | async; let i = index">
+            <th scope="row">{{ label?.label }}</th>
+            <td><a [href]="label?.urlPattern">{{ label?.urlPattern }}</a></td>
+            <td>
+                <qrcode 
+                [title]="label?.label" 
+                (qrCodeURL)="onChangeURL($event,i)" 
+                [qrdata]="label.urlPattern" 
+                [width]="128" 
+                [errorCorrectionLevel]="'M'"
+                [imageSrc]="label.logo"
+                ></qrcode>
+            </td>
             <td class="d-flex justify-content-between align-items-center">
-                <div (click)="preview(section)">
-                    <img src="assets/icons/view_icon.png" height="24" width="24" alt="">
-                </div>
+                <a [href]="label?.qrCodeDownloadLink" download="qrcode"><img src="assets/icons/download_icon.png" height="24" width="24" alt=""></a>
             </td>
           </tr>
         </tbody>
@@ -70,6 +78,7 @@
       </div>
     </div>
   </div>
+</div>
 </div>
 <ng-template #title> Generate QR code </ng-template>
 

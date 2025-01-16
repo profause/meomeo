@@ -96,35 +96,55 @@
       </div>
       <div class="col-12">
         <div class="d-flex justify-content-end align-items-center">
-            <button
-              mat-button
-              color="accent"
-              (click)="save()"
-              mat-flat-button
-              [disabled]="
+          <button
+            mat-button
+            color="accent"
+            (click)="save()"
+            mat-flat-button
+            [disabled]="
               isLoading ||
-              accountFormGroup.get('mobileNumber')?.hasError('required')"
-              style="font-size: 14px; width: inherit">
-              Save
-            </button>
+              accountFormGroup.get('mobileNumber')?.hasError('required')
+            "
+            style="font-size: 14px; width: inherit"
+          >
+            Save
+          </button>
+        </div>
+      </div>
+      <div class="col-4">
+        <div>
+          <h3 class="p-0 m-0 text-muted">Account status</h3>
+          <p class="p-0 m-0">{{ accountFormGroup.get("status").value }}</p>
+        </div>
+      </div>
+      <div class="col-4">
+        <div>
+          <h3 class="p-0 m-0 text-muted">Date created</h3>
+          <p class="p-0 m-0">
+            {{ accountFormGroup.get("dateCreated").value | date }}
+          </p>
+        </div>
+      </div>
+      <div class="col-4">
+        <div>
+          <h3 class="p-0 m-0 text-muted">Trail Period</h3>
+          <p class="p-0 m-0">
+            {{ accountFormGroup.get("isTrialPeriodDue").value || false }}
+          </p>
+        </div>
+      </div>
+      <div class="col-4">
+        <div>
+          <h3 class="p-0 m-0 mt-2 text-muted">Logo</h3>
+          <div>
+            <img
+              [src]="accountFormGroup.get('logo').value"
+              height="64"
+              width="64"
+              alt=""
+            />
+            <button type="button" mat-stroked-button>Upload</button>
           </div>
-      </div>
-      <div class="col">
-        <div>
-            <h3 class="p-0 m-0 text-muted">Account status</h3>
-            <p class="p-0 m-0">{{accountFormGroup.get('status').value}}</p>
-        </div>
-      </div>
-      <div class="col">
-        <div>
-            <h3 class="p-0 m-0 text-muted">Date created</h3>
-            <p class="p-0 m-0">{{accountFormGroup.get('dateCreated').value | date}}</p>
-        </div>
-      </div>
-      <div class="col">
-        <div>
-            <h3 class="p-0 m-0 text-muted">Trail Period</h3>
-            <p class="p-0 m-0">{{accountFormGroup.get('isTrialPeriodDue').value || false}}</p>
         </div>
       </div>
     </div>

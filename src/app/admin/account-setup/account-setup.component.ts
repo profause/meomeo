@@ -40,7 +40,8 @@ export class AccountSetupComponent implements OnInit, OnDestroy {
       mobileNumber: new FormControl('', Validators.nullValidator),
       role: new FormControl('ADMIN', Validators.nullValidator),
       status: new FormControl('ACTIVE', Validators.nullValidator),
-      isTrialPeriodDue:new FormControl(false, Validators.nullValidator),
+      isTrialPeriodDue: new FormControl(false, Validators.nullValidator),
+      logo: new FormControl('', Validators.nullValidator),
     });
 
     this.user = this.localAuth.getUser();
@@ -64,7 +65,8 @@ export class AccountSetupComponent implements OnInit, OnDestroy {
           mobileNumber: this.user.mobileNumber,
           role: this.user.role,
           status: account.status,
-          isTrialPeriodDue: account.isTrialPeriodDue
+          isTrialPeriodDue: account.isTrialPeriodDue,
+          logo: account.logo,
         });
       });
   }

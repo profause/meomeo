@@ -1,5 +1,4 @@
-import { Subscription } from "./subscription.interface";
-
+import { Subscription } from './subscription.interface';
 
 export interface Account {
   id?: string | undefined;
@@ -10,4 +9,5 @@ export interface Account {
   subscription?: Subscription;
   isTrialPeriodDue?: boolean;
   status?: string;
+  logo?: string;
 }

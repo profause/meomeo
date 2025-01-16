@@ -9,6 +9,7 @@ import { AccountSetupComponent } from './account-setup/account-setup.component';
 import { SubscriptionComponent } from './subscription/subscription.component';
 import { LayoutComponent } from './layout/layout.component';
 import { LabelsAndQrComponent } from './labels-and-qr/labels-and-qr.component';
+import { QRCodeModule } from 'angularx-qrcode';
 
 
 @NgModule({
@@ -24,6 +25,8 @@ import { LabelsAndQrComponent } from './labels-and-qr/labels-and-qr.component';
     AdminRoutingModule,
     AppMaterialDesignModule,
     SharedModule,
+    QRCodeModule
+
   ]
 })
 export class AdminModule { }

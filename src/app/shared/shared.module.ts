@@ -20,6 +20,7 @@ import { AuthGuard } from './utils/guards/auth.guard';
 import { RoleGuard } from './utils/guards/role.guard';
 import { RelativeTimePipe } from './utils/relative-time-pipe';
 import { AppbarComponent } from './components/appbar/appbar.component';
+import { QRCodeModule } from 'angularx-qrcode';
 
 
 
@@ -38,6 +39,7 @@ import { AppbarComponent } from './components/appbar/appbar.component';
     MatCardModule,
     MatButtonModule,
     AppMaterialDesignModule,
+    QRCodeModule
   ],providers: [
     BackendService,
     WindowService,

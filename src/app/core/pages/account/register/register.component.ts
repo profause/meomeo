@@ -208,6 +208,7 @@ export class RegisterComponent implements OnDestroy{
       dateCreated: formData['dateCreated'],
       status: formData['status'],
       createdBy: formData['id'],
+      logo: 'assets/icons/restaurant_menu_icon.png',
     };
 
     //console.log('account ', account);

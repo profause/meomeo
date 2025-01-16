@@ -17,6 +17,7 @@ import { AngularFireAuthModule } from '@angular/fire/compat/auth';
 
 import * as firebase from 'firebase/app';
 import { DashboardModule } from './dashboard/dashboard.module';
+import { QRCodeModule } from 'angularx-qrcode';
 
 firebase.initializeApp(environment.firebaseConfig);
 
@@ -37,7 +38,8 @@ firebase.initializeApp(environment.firebaseConfig);
     SharedModule,
     AdminModule,
     CoreModule,
-    DashboardModule
+    DashboardModule,
+    QRCodeModule
   ],
   providers: [
     {provide: FIREBASE_OPTIONS, useValue: environment.firebaseConfig},
