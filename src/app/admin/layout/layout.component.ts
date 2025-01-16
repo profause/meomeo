@@ -27,7 +27,7 @@ export class LayoutComponent implements OnInit, OnDestroy {
   user: User = {};
 
   public sectionList = new Array<Section>();
-  public sectionList$: Observable<Section[]> = new Observable<User[]>();
+  public sectionList$: Observable<Section[]> = new Observable<Section[]>();
   public sectionListBehaviour: BehaviorSubject<Section[]>;
 
   constructor(
@@ -73,7 +73,7 @@ export class LayoutComponent implements OnInit, OnDestroy {
             return {
               id: item.payload.doc.id,
               ...item.payload.doc.data(),
-            } as User;
+            } as Section;
           });
 
           this.sectionList = sections;

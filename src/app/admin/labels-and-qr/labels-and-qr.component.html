@@ -1,0 +1,79 @@
+<div class="row" style="min-width: 100%;">
+  <h2>Lables and QR code</h2>
+  <hr />
+  <div class="col-12">
+    <mat-form-field appearance="outline" style="width: 100%">
+      <mat-label>Table name pattern</mat-label>
+      <mat-select [formControl]="sectionFormControl">
+        <mat-option disabled value="">Select section</mat-option>
+        <mat-option
+          *ngFor="let section of sectionList$ | async"
+          [value]="section"
+        >
+          {{ section.name }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+  <div class="col-12">
+    <div class="d-flex justify-content-end align-items-center">
+      <button
+        mat-button
+        (click)="generateQrCode(sectionFormControl.value)"
+        color="accent"
+        mat-flat-button
+        [disabled]="isLoading || sectionFormControl.invalid"
+        style="font-size: 14px; width: inherit"
+      >
+        <ng-template
+          [ngIf]="!isLoading"
+          [ngIfThen]="title"
+          [ngIfElse]="spinner"
+        >
+        </ng-template>
+      </button>
+    </div>
+  </div>
+  <div class="col-12 mt-3 p-1">
+    <h4 class="">List of Labels and QR code</h4>
+    <div class="table-responsive bg-white rounded" style="max-height: 520px">
+      <table class="table bg-white table-striped table-sm">
+        <thead>
+          <tr>
+            <th scope="col">Name</th>
+            <th scope="col">Number of table</th>
+            <th scope="col">Table name pattern</th>
+            <th scope="col"></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let section of sectionList$ | async; let i = index">
+            <th scope="row">{{ section?.name }}</th>
+            <td>{{ section?.numberOfTables }}</td>
+            <td>{{ section.tableNamePattern }}</td>
+            <td class="d-flex justify-content-between align-items-center">
+                <div (click)="preview(section)">
+                    <img src="assets/icons/view_icon.png" height="24" width="24" alt="">
+                </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="d-flex justify-content-center">
+        <mat-spinner
+          [hidden]="!isLoading"
+          mode="indeterminate"
+          [diameter]="25"
+          [strokeWidth]="3"
+        >
+        </mat-spinner>
+      </div>
+    </div>
+  </div>
+</div>
+<ng-template #title> Generate QR code </ng-template>
+
+<ng-template #spinner>
+  <mat-spinner mode="indeterminate" [diameter]="25" [strokeWidth]="3">
+  </mat-spinner>
+</ng-template>

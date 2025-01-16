@@ -8,6 +8,7 @@ import { SharedModule } from '../shared/shared.module';
 import { AccountSetupComponent } from './account-setup/account-setup.component';
 import { SubscriptionComponent } from './subscription/subscription.component';
 import { LayoutComponent } from './layout/layout.component';
+import { LabelsAndQrComponent } from './labels-and-qr/labels-and-qr.component';
 
 
 @NgModule({
@@ -15,7 +16,8 @@ import { LayoutComponent } from './layout/layout.component';
     SystemSetupComponent,
     AccountSetupComponent,
     SubscriptionComponent,
-    LayoutComponent
+    LayoutComponent,
+    LabelsAndQrComponent
   ],
   imports: [
     CommonModule,
