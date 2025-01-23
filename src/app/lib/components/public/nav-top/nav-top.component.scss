@@ -1,0 +1,28 @@
+/* Global SCSS for Logo */
+.logo {
+    display: flex;
+    align-items: center;  /* Aligns text and image horizontally */
+    gap: 10px;  /* Space between text and the image */
+    
+    a {
+      text-decoration: none;  /* Removes underline from the link */
+      color: inherit;  /* Inherit color from parent (or set color globally) */
+      font-size: 1.25rem;  /* Text size for the logo text */
+      font-weight: bold;  /* Bold text for the logo */
+    }
+  
+    img {
+      height: 40px;  /* Set a fixed height for the logo image */
+      width: auto;  /* Maintain aspect ratio */
+      display: inline-block;  /* Ensure the image stays inline with text */
+    }
+  
+    /* Optional: Adjust for smaller screens */
+    @media (max-width: 768px) {
+      gap: 5px;  /* Reduce space between text and image on smaller screens */
+      img {
+        height: 30px;  /* Make the logo image smaller on mobile */
+      }
+    }
+  }
+  
